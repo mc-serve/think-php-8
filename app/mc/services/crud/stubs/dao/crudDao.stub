@@ -1,0 +1,43 @@
+<?php
+/**
+ *  +----------------------------------------------------------------------
+ *  | MC [ MC多应用系统，全产业链赋能 ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2016~{%YEAR%} https://www.mc-serve.com All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Licensed MC并不是自由软件，未经许可不能去掉MC相关版权
+ *  +----------------------------------------------------------------------
+ *  | Author: MC Team <cs@mc-serve.com>
+ *  +----------------------------------------------------------------------
+ */
+
+/**
+ * {%MODEL_NAME%}
+ * @author crud自动生成代码
+ * @date {%TIME%}
+ */
+
+namespace app\dao\crud{%PATH%};
+
+
+use app\mc\basic\BaseDao;
+{%USE_PHP%}
+/**
+ * Class {%NAME_CAMEL%}Dao
+ * @date {%DATE%}
+ * @package app\dao\crud{%path%}
+ */
+class {%NAME_CAMEL%}Dao extends BaseDao
+{
+
+    /**
+     * 设置模型
+     * @return string
+     * @date {%DATE%}
+     */
+    protected function setModel(): string
+    {
+        return {%NAME_CAMEL%}::class;
+    }
+{%CONTENT_PHP%}
+}

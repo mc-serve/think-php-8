@@ -1,0 +1,39 @@
+// +----------------------------------------------------------------------
+// | MC [ MC多应用系统，全产业链赋能 ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~{%YEAR%} https://www.mc-serve.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed MC并不是自由软件，未经许可不能去掉MC相关版权
+// +----------------------------------------------------------------------
+// | Author: MC Team <cs@mc-serve.com>
+// +----------------------------------------------------------------------
+
+import LayoutMain from '@/layout';
+import setting from '@/setting'
+
+let routePre = setting.routePre
+
+const meta = {
+    auth: true,
+}
+
+const pre = '{%NAME%}_'
+
+export default {
+    path: `${routePre}`,
+    name: 'crud_{%NAME%}',
+    header: '{%NAME_HEADER%}',
+    meta,
+    component: LayoutMain,
+    children: [
+        {
+            path: '{%ROUTE%}',
+            name: `${pre}list`,
+            meta: {
+                auth: ['{%NAME%}-crud-list-index'],
+                title: '{%MENUS%}',
+            },
+            component: () => import('@/pages/crud/{%PAGE_PATH%}/index'),
+        },
+    ],
+}

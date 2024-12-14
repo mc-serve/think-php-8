@@ -1,0 +1,53 @@
+<?php
+/**
+ *  +----------------------------------------------------------------------
+ *  | MC [ MC多应用系统，全产业链赋能 ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2016~{%YEAR%} https://www.mc-serve.com All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Licensed MC并不是自由软件，未经许可不能去掉MC相关版权
+ *  +----------------------------------------------------------------------
+ *  | Author: MC Team <cs@mc-serve.com>
+ *  +----------------------------------------------------------------------
+ */
+
+/**
+ * {%MODEl_NAME%}
+ * @author crud自动生成代码
+ * @date {%TIME%}
+ */
+
+namespace app\admin\validate\crud{%PATH%};
+
+
+use think\Validate;
+
+/**
+ * Class CrudValidate
+ * @date {%DATE%}
+ * @package app\admin\validate\crud{%PATH%}
+ */
+class {%NAME_CAMEL%}Validate extends Validate
+{
+
+    /**
+     * @var array
+     */
+    protected $rule = [
+{%RULE_PHP%}
+    ];
+
+    /**
+     * @var array
+     */
+    protected $message = [
+{%MESSAGE_PHP%}
+    ];
+
+    /**
+     * @var array
+     */
+    protected $scene = [
+
+    ];
+}

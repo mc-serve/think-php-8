@@ -7,6 +7,8 @@ use think\exception\Handle;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
+use think\db\exception\PDOException;
+use think\facade\Log;
 use think\Response;
 use Throwable;
 
@@ -50,9 +52,44 @@ class ExceptionHandle extends Handle
      */
     public function render($request, Throwable $e): Response
     {
-        // 添加自定义异常处理机制
+        if ($e instanceof \BadMethodCallException) {
+            Log::write(json_encode($e->getTrace()), 'error');
+        } elseif ($e instanceof PDOException) {
+            Log::write(json_encode($e->getTrace()), 'error');
+        } elseif ($e instanceof \InvalidArgumentException) {
+            Log::write(json_encode($e->getTrace()), 'error');
+        } else {
+            Log::write($e->getMessage(), 'error');
+        }
 
-        // 其他错误交给系统处理
-        return parent::render($request, $e);
+        // 添加自定义异常处理机制
+        if ($request->isAjax()) {
+            $data = [];
+            if (env('APP_DEBUG', false)) {
+                $data['message'] = $e->getMessage();
+                $data['trace'] = $e->getTrace();
+            }
+            if ($e instanceof \app\mc\exceptions\AuthException) {
+                return app('json')->error($e->getCode(), $e->getMessage(), $data);
+            }
+            if ($e instanceof \think\exception\HttpException) {
+                return app('json')->error(200001, '接口不存在', $data);
+            }
+            if ($e instanceof \app\mc\exceptions\ApiException) {
+                return app('json')->error(200001, $e->getMessage(), $data);
+            }
+            return app('json')->error(200001, '系统异常', $data);
+        } else {
+            if (env('APP_DEBUG', false)) {
+                return parent::render($request, $e);
+            }
+            if ($e instanceof \think\exception\HttpResponseException) {
+                return parent::render($request, $e);
+            }
+            if ($e instanceof \think\exception\HttpException) {
+                return response('页面不存在');
+            }
+            return response('系统异常');
+        }
     }
 }

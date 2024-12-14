@@ -1,0 +1,45 @@
+<?php
+/**
+ *  +----------------------------------------------------------------------
+ *  | MC [ MC多应用系统，全产业链赋能 ]
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2016~{%YEAR%} https://www.mc-serve.com All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | Licensed MC并不是自由软件，未经许可不能去掉MC相关版权
+ *  +----------------------------------------------------------------------
+ *  | Author: MC Team <cs@mc-serve.com>
+ *  +----------------------------------------------------------------------
+ */
+
+/**
+ * {%MODEL_NAME%}
+ * @author crud自动生成代码
+ * @date {%TIME%}
+ */
+
+namespace app\services\crud{%PATH%};
+
+use app\mc\basic\BaseServices;
+use think\exception\ValidateException;
+{%USE_PHP%}
+
+/**
+ * Class CrudService
+ * @date {%DATE%}
+ * @package app\services\crud{%PATH%}
+ */
+class {%NAME_CAMEL%}Services extends BaseServices
+{
+
+    /**
+     * {%NAME_CAMEL%}Services constructor.
+     * @param {%NAME_CAMEL%}Dao $dao
+     */
+    public function __construct({%NAME_CAMEL%}Dao $dao)
+    {
+        $this->dao = $dao;
+    }
+
+{%CONTENT_PHP%}
+
+}
