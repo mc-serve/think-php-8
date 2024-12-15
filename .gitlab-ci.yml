@@ -28,9 +28,9 @@ stages:          # List of stages for jobs, and their order of execution
   script:
     - echo $CI_PROJECT_PATH
     - ssh dev "if [ ! -d ~/data/$CI_PROJECT_PATH ]; then
-        git clone ssh://git@dev.mc-serve.com:6822/$CI_PROJECT_PATH.git ~/data/$CI_PROJECT_PATH;
+        git clone ssh://git@dev.mc-serve.com:6822/$CI_PROJECT_PATH.git /data/$CI_PROJECT_PATH;
       else
-        cd ~/data/$CI_PROJECT_PATH && git pull;
+        cd /data/$CI_PROJECT_PATH && git pull;
       fi"
 
 sync_to_github:
@@ -42,6 +42,9 @@ sync_to_github:
     - mkdir -p ~/.ssh
     - echo "$SYNC_GITHUB_PRIVATE_KEY" > ~/.ssh/sync_github
     - chmod 600 ~/.ssh/sync_github
+    - ls
+    - pwd
+    - cd /data/$CI_PROJECT_PATH
     
     # 使用 GIT_SSH_COMMAND 指定使用专用密钥
     - export GIT_SSH_COMMAND='ssh -i ~/.ssh/sync_github -o StrictHostKeyChecking=no'
