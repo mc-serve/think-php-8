@@ -32,7 +32,7 @@ stages:          # List of stages for jobs, and their order of execution
         git clone ssh://git@dev.mc-serve.com:6822/$CI_PROJECT_PATH.git /sync/$CI_PROJECT_PATH;
       else
         cd /sync/$CI_PROJECT_PATH && git pull;
-      fi"
+      fi
 
 sync_to_github:
   stage: sync
