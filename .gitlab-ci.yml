@@ -33,6 +33,7 @@ stages:          # List of stages for jobs, and their order of execution
       else
         cd /sync/$CI_PROJECT_PATH && git pull;
       fi
+    - git branch -r | grep origin/ | grep -v 'HEAD' | sed 's|origin/||' | xargs -I{} git branch --track {} origin/{} 2>/dev/null || true
 
 sync_to_github:
   stage: sync
