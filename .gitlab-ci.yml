@@ -11,6 +11,7 @@
 # +----------------------------------------------------------------------
 
 stages:          # List of stages for jobs, and their order of execution
+  - clone
   - install
   - test
   - build
@@ -18,14 +19,25 @@ stages:          # List of stages for jobs, and their order of execution
   - end
   - sync
 
+拉取代码:
+  stage: clone
+  tags:
+    - sync
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo $CI_PROJECT_PATH
+    - ssh dev "if [ ! -d ~/data/$CI_PROJECT_PATH ]; then
+        git clone -b dev ssh://git@dev.mc-serve.com:6880/$CI_PROJECT_PATH.git ~/data/$CI_PROJECT_PATH;
+      else
+        cd ~/data/$CI_PROJECT_PATH && git pull;
+      fi"
+
 sync_to_github:
   stage: sync
   tags:
     - sync
   script:
-    # 安装 SSH 客户端
-    # - apt-get update -qq && apt-get install -y openssh-client
-    
     # 配置专用的同步密钥
     - mkdir -p ~/.ssh
     - echo "$SYNC_GITHUB_PRIVATE_KEY" > ~/.ssh/sync_github
