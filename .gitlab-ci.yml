@@ -27,10 +27,11 @@ stages:          # List of stages for jobs, and their order of execution
     GIT_STRATEGY: none
   script:
     - echo $CI_PROJECT_PATH
-    - ssh test "if [ ! -d ~/data/$CI_PROJECT_PATH ]; then
-        git clone ssh://git@dev.mc-serve.com:6822/$CI_PROJECT_PATH.git ~/data/$CI_PROJECT_PATH;
+    - mkdir -p /sync
+    - if [ ! -d /sync/$CI_PROJECT_PATH ]; then
+        git clone ssh://git@dev.mc-serve.com:6822/$CI_PROJECT_PATH.git /sync/$CI_PROJECT_PATH;
       else
-        cd ~/data/$CI_PROJECT_PATH && git pull;
+        cd /sync/$CI_PROJECT_PATH && git pull;
       fi"
 
 sync_to_github:
@@ -42,12 +43,11 @@ sync_to_github:
     - mkdir -p ~/.ssh
     - echo "$SYNC_GITHUB_PRIVATE_KEY" > ~/.ssh/sync_github
     - chmod 600 ~/.ssh/sync_github
-    - ls
-    - pwd
-    - cd /data/$CI_PROJECT_PATH
-    - git status
     
     # 使用 GIT_SSH_COMMAND 指定使用专用密钥
+    - cd /sync/$CI_PROJECT_PATH
+    - git status
+    - git branch
     - export GIT_SSH_COMMAND='ssh -i ~/.ssh/sync_github -o StrictHostKeyChecking=no'
 
     # 克隆 GitHub 仓库并同步所有分支
