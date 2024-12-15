@@ -39,3 +39,4 @@ sync_to_github:
     - git fetch --all
     - git push github --all
     - git push github --tags
+    - git branch -r | grep github/ | sed 's|github/||' | xargs -I{} git push github {}
