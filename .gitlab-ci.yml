@@ -47,14 +47,11 @@ sync_to_github:
     - chmod 600 ~/.ssh/sync_github
     
     # 使用 GIT_SSH_COMMAND 指定使用专用密钥
-    - cd /sync/$CI_PROJECT_PATH
-    - git status
-    - git branch
     - export GIT_SSH_COMMAND='ssh -i ~/.ssh/sync_github -o StrictHostKeyChecking=no'
 
     # 克隆 GitHub 仓库并同步所有分支
-    - if git remote | grep -q "^github$"; then echo "Remote 'github' already exists."; else git remote add github git@github.com:mc-serve/think-php-8.git; fi
-    - git branch
+    - cd /sync/$CI_PROJECT_PATH
+    - if git remote | grep -q "^github$"; then echo "Remote 'github' already exists."; else git remote add github $github_url; fi
     - git push github --all
     - git push github --tags
     - git branch -r | grep github/ | sed 's|github/||' | xargs -I{} git push github {}
