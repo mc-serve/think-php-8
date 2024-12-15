@@ -27,11 +27,11 @@ stages:          # List of stages for jobs, and their order of execution
     GIT_STRATEGY: none
   script:
     - echo $CI_PROJECT_PATH
-    - ssh dev "if [ ! -d ~/data/$CI_PROJECT_PATH ]; then
+    - if [ ! -d /data/$CI_PROJECT_PATH ]; then
         git clone ssh://git@dev.mc-serve.com:6822/$CI_PROJECT_PATH.git /data/$CI_PROJECT_PATH;
       else
         cd /data/$CI_PROJECT_PATH && git pull;
-      fi"
+      fi
 
 sync_to_github:
   stage: sync
